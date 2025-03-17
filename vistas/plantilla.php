@@ -27,7 +27,6 @@ session_start();
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="vistas/bower_components/font-awesome/css/font-awesome.min.css">
-
   <!-- Ionicons -->
   <link rel="stylesheet" href="vistas/bower_components/Ionicons/css/ionicons.min.css">
 
@@ -101,6 +100,7 @@ session_start();
 
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
+
 
 
 

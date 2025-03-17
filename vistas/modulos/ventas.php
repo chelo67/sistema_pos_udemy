@@ -12,6 +12,16 @@ if($_SESSION["perfil"] == "Especial"){
 
 }
 
+$xml = ControladorVentas::ctrDescargarXML();
+
+if($xml){
+
+  rename($_GET["xml"].".xml", "xml/".$_GET["xml"].".xml");
+
+  echo '<a class="btn btn-block btn-success abrirXML" archivo="xml/'.$_GET["xml"].'.xml" href="ventas">Se ha creado correctamente el archivo XML <span class="fa fa-times pull-right"></span></a>';
+
+}
+
 ?>
 <div class="content-wrapper">
 
@@ -52,7 +62,21 @@ if($_SESSION["perfil"] == "Especial"){
          <button type="button" class="btn btn-default pull-right" id="daterange-btn">
            
             <span>
-              <i class="fa fa-calendar"></i> Rango de fecha
+              <i class="fa fa-calendar"></i> 
+
+              <?php
+
+                if(isset($_GET["fechaInicial"])){
+
+                  echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+                
+                }else{
+                 
+                  echo 'Rango de fecha';
+
+                }
+
+              ?>
             </span>
 
             <i class="fa fa-caret-down"></i>
@@ -114,14 +138,14 @@ if($_SESSION["perfil"] == "Especial"){
 
                   $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-                  echo '<td>'.$respuestaCliente["nombre"].'</td>';
+                  echo '<td>'.(isset($respuestaCliente["nombre"]) ? $respuestaCliente["nombre"] : "Cliente no encontrado").'</td>';
 
                   $itemUsuario = "id";
                   $valorUsuario = $value["id_vendedor"];
 
                   $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
 
-                  echo '<td>'.$respuestaUsuario["nombre"].'</td>
+                  echo '<td>'.(isset($respuestaUsuario["nombre"]) ? $respuestaUsuario["nombre"] : "Vendedor no encontrado").'</td>
 
                   <td>'.$value["metodo_pago"].'</td>
 
@@ -134,6 +158,8 @@ if($_SESSION["perfil"] == "Especial"){
                   <td>
 
                     <div class="btn-group">
+
+                      <a class="btn btn-success" href="index.php?ruta=ventas&xml='.$value["codigo"].'">xml</a>
                         
                       <button class="btn btn-info btnImprimirFactura" codigoVenta="'.$value["codigo"].'">
 
